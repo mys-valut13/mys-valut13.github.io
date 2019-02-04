@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用PAC代理脚本自动选择代理服务器 | Hexo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="『Twitter』,pac," />
+  
+
+  <meta name="description" content="Chrome没有像Firefox一样好用的代理服务器，如FoxProxy，Gladder等，只能使用IE的全局代理。迫使我们重新把目光放回全局代理上。其实Windows提供了与FoxProxy功能上几乎毫无二致，甚至批量自定义功能更强大的PAC代理脚本功能。在WindowsInternet管理中，填上正确的PAC代理脚本地址就可以使用智能的代理选择脚本。本地脚本使用file://c:/ 这样的绝对">
+<meta name="keywords" content="『Twitter』,pac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用PAC代理脚本自动选择代理服务器">
+<meta property="og:url" content="http://yoursite.com/2009/pac/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Chrome没有像Firefox一样好用的代理服务器，如FoxProxy，Gladder等，只能使用IE的全局代理。迫使我们重新把目光放回全局代理上。其实Windows提供了与FoxProxy功能上几乎毫无二致，甚至批量自定义功能更强大的PAC代理脚本功能。在WindowsInternet管理中，填上正确的PAC代理脚本地址就可以使用智能的代理选择脚本。本地脚本使用file://c:/ 这样的绝对">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://mys-1258411278.cos.ap-shanghai.myqcloud.com/Valut13-images/2009/09/11.jpg">
+<meta property="og:image" content="http://mystryl.cn/wp-content/plugins/postie/icons/silver/default-32.png">
+<meta property="og:updated_time" content="2019-02-04T00:15:07.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用PAC代理脚本自动选择代理服务器">
+<meta name="twitter:description" content="Chrome没有像Firefox一样好用的代理服务器，如FoxProxy，Gladder等，只能使用IE的全局代理。迫使我们重新把目光放回全局代理上。其实Windows提供了与FoxProxy功能上几乎毫无二致，甚至批量自定义功能更强大的PAC代理脚本功能。在WindowsInternet管理中，填上正确的PAC代理脚本地址就可以使用智能的代理选择脚本。本地脚本使用file://c:/ 这样的绝对">
+<meta name="twitter:image" content="https://mys-1258411278.cos.ap-shanghai.myqcloud.com/Valut13-images/2009/09/11.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-pac" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">使用PAC代理脚本自动选择代理服务器</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2009.09.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>John Doe</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/category/Geek/">Geek</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="Nothing is true, Everything is permitted./2009/pac/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div class="gmail_quote">Chrome没有像Firefox一样好用的代理服务器，如FoxProxy，Gladder等，只能使用IE的全局代理。迫使我们重新把目光放回全局代理上。<br><div>其实Windows提供了与FoxProxy功能上几乎毫无二致，甚至批量自定义功能更强大的PAC代理脚本功能。</div><br><div></div><br><div><img src="https://mys-1258411278.cos.ap-shanghai.myqcloud.com/Valut13-images/2009/09/11.jpg" alt="1.jpg" title="1.jpg"><p></p><br></div><br><div>在WindowsInternet管理中，填上正确的PAC代理脚本地址就可以使用智能的代理选择脚本。</div><br><div>本地脚本使用file://c:/ 这样的绝对地址，Firefox如果测试不成功请设置为file:///c:/ 。更方便的是放在自己的空间外链中，使用Http://或者Https://的地址协议。 </div><br><div> PAC脚本的语法是基础的JScript语言，Attachment的例子与<a href="http://hi.baidu.com/zhbdbb/blog/item/286608d7a33b66dfa144df1d.html" target="_blank" rel="noopener">这个文档</a>，都介绍了基础的PAC代理脚本的制作与编辑方法。</div><br><div>由于是纯文本的代码脚本，相对于FoxProxy几乎要全手动的设置各个代理与白名单黑名单（就是因为这个我疲于使用FoxProxy），PAC脚本编辑的便捷程度要高了许多。几乎能同样实现FoxProxy的各个功能。</div><br><div>Attachment的PAC脚本 是来自于 <a href="http://twitter.com/Ratoo" target="_blank" rel="noopener">@Ratoo</a> 同学的脚本，我加入了针对Youtube的代理，并去掉了针对<a href="http://dabr.co.uk/" target="_blank" rel="noopener">Dabr</a>，<a href="http://www.itweet.net/" target="_blank" rel="noopener">iTweet</a>，<a href="http://www.twitzap.com/" target="_blank" rel="noopener">Twitzap</a>的代理转向（因为洁癖）。</div><br><div>在墙的面前，群众的智慧是无穷的。</div><br><div>本PAC脚本中，使用的是<a href="http://www.erights.net/" target="_blank" rel="noopener">puff代理</a>。代理地址 <a href="http://127.0.0.1:1984" target="_blank" rel="noopener">127.0.0.1:1984</a> 作为一家试运行阶段的商业公司，puff代理目前处于免费运营状态，在60th目前的背景下依旧具有良好的速度，与勉强可以的稳定性。</div><br><div>Attachment2中附带的是puff与U95与FreeGate的最新版。目前稳定性都不是很高。</div><br><div>比如现在我在用的就是功能最差，但至少有那么一点稳定性的私有GappProxy，开了一晚上的<a href="http://Twitter.com" target="_blank" rel="noopener">Http://Twitter.com</a>(Http:// 链接) However it helps to understand that in case your  <a href="http://best-casinos-online.info" target="_blank" rel="noopener">casino</a>  vessel comes with an impressive variety of high-tech weaponry &ndash; as well as your job would be to fire that weaponry &ndash; this really is most likely not time to obtain your gamble on. pbTweet效果很好。</div><br><div>附上代理地址表：</div><br><div>puff：<a href="http://127.0.0.1:1984" target="_blank" rel="noopener">127.0.0.1:1984</a></div><br><div> U95：<a href="http://127.0.0.1:9666" target="_blank" rel="noopener">127.0.0.1:9666</a></div><br><div>Freegate：<a href="http://127.0.0.1:8580" target="_blank" rel="noopener">127.0.0.1:8580</a></div><br><div>GappProxy：<a href="http://127.0.0.1:8000" target="_blank" rel="noopener">127.0.0.1:8000</a></div><br><div></div><br><div> 在南京大学内部，使用免费出校代理可连接GappProxy，所以理论上同样可以通过CCproxy转发，来使用PAC代理脚本。</div><br><div></div><br><div>PAC代理脚本的特点有</div><br><div>1、全局性：针对那些不能设置代理的程序，由于IE代理的全局性，某些时候可以直接翻墙而不需要其他设置。</div><br><div>2、便捷性：针对不同的代理环境只需更换事先准备好的代理文件，但要注意的是，代理在浏览器载入的同时加载，更改了脚本设定请重新加载打开浏览器进程。</div><br><div>3、独占性：PAC代理脚本开启时，手动的代理设置是无效的。这会造成一些翻墙软件的误判请注意。</div><br><div></div><br><div>PS：邮件撰写blog发布，快捷安全有效。</div><br><div>Fin.</div><br><div>(我EP了写翻墙软文，自X去睡觉……</div><br><p></p></div>
+
+<p>Update: 最新可用……（殴</p>
+<p><a href="https://mys-1258411278.cos.ap-shanghai.myqcloud.com/Valut13-images/2009/09/FFUP GF.rar" target="_blank" rel="noopener"><img src="http://mystryl.cn/wp-content/plugins/postie/icons/silver/default-32.png" alt="default icon">FFUP GF.rar</a></p>
+<p>Update:</p>
+<blockquote>
+<p>终于开始贴这种技术了，附带参数备忘，恩，chrome beta/dev 通道上有效–proxy-pac-url=file://driver:/folder/proxy.pac–proxy-pac-url=<a href="https://somesite/proxy.pac" target="_blank" rel="noopener">https://somesite/proxy.pac</a></p>
+<p>Tm.X 在 GoogleReader 说</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持Mystryl</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>   免了吧    </span>
+            
+            <img src="/images/qr.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>   卖个萌    </span>
+            
+            <img src="/images/qr.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2009/20090912-wanna-sleep/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2009/tour-beijing-food/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'http-mystryl-com';
+    
+    var disqus_url = 'http://yoursite.com/2009/pac/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//http-mystryl-com.disqus.com/count.js" async></script>
+
+
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
